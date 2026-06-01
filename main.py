@@ -9,11 +9,9 @@ from scipy.optimize import dual_annealing
 import warnings
 warnings.filterwarnings("ignore")
 
-
 from eqc_models.base import PolynomialModel, QuadraticModel
 
 np.random.seed(42)
-
 
 IEEE33_LINES = [
     (1,2,  0.0922,0.0470,400), (2,3,  0.4930,0.2511,400),
@@ -44,7 +42,7 @@ IEEE33_LOAD_KW = [
 NUM_BUSES      = 33
 NUM_MICROGRIDS = 4
 NUM_SCENARIOS  = 20
-CRITICAL_BUSES = {1, 6, 12, 22}
+CRITICAL_BUSES = {1, 6, 12, 22} # Priority assets (Hospitals, etc.)
 
 G = nx.Graph()
 for (u, v, r, x, lim) in IEEE33_LINES:
@@ -53,7 +51,7 @@ for (u, v, r, x, lim) in IEEE33_LINES:
 print(f"Grid: {G.number_of_nodes()} buses, {G.number_of_edges()} lines")
 print(f"Total load: {sum(IEEE33_LOAD_KW):.0f} kW")
 
-
+# Spectral boundary partitioning
 adj = np.zeros((NUM_BUSES, NUM_BUSES))
 for (u, v, r, x, lim) in IEEE33_LINES:
     i, j = u - 1, v - 1
@@ -97,8 +95,7 @@ plt.tight_layout()
 plt.savefig("grid_clusters.png", dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
 plt.show()
 
-
-
+# Sampling storm profiles over ARPA-E GO distribution space
 sampler     = qmc.LatinHypercube(d=3, seed=42)
 lhs_samples = sampler.random(n=NUM_SCENARIOS)
 scaled      = qmc.scale(lhs_samples, [0.2, 0.7, 0], [1.0, 1.3, 1])
@@ -120,17 +117,17 @@ for s in range(NUM_SCENARIOS):
 
 print(f"\nGenerated {NUM_SCENARIOS} scenarios (Latin Hypercube Sampling)")
 
-
+# Optimization penalty parameters
 MAX_OBJ  = 100.0 * NUM_BUSES
-ALPHA    = MAX_OBJ * 10
-GAMMA    = MAX_OBJ * 8
-DELTA    = MAX_OBJ * 0.5
-C_ASSET  = 45.0
-C_SWITCH = 12.0
-W_CRIT   = 2e6
-W_BASE   = 180.0
+ALPHA    = MAX_OBJ * 10    # Feasibility scaling
+GAMMA    = MAX_OBJ * 8     # Islanding enforcement
+DELTA    = MAX_OBJ * 0.5   # Ramp-rate restriction
+C_ASSET  = 45.0            # DER cost
+C_SWITCH = 12.0            # Switch cost
+W_CRIT   = 2e6             # Critical infrastructure penalty
+W_BASE   = 180.0           # Standard load weight
 
-
+# Stage 1: Asset Planning Hamiltonian (H_design)
 def build_design_hamiltonian():
     indices, coeffs = [], []
     for i in range(NUM_BUSES):
@@ -149,7 +146,7 @@ def build_design_hamiltonian():
                 coeffs.append(ALPHA / NUM_BUSES**2)
     return indices, coeffs
 
-
+# Stage 2: Islanding Sub-Problem Hamiltonian (H_island)
 def build_island_hamiltonian(scenario):
     indices, coeffs = [], []
     P_gen  = scenario["P_gen"]
@@ -168,7 +165,7 @@ def build_island_hamiltonian(scenario):
         coeffs.append(lin)
     return indices, coeffs
 
-
+# Stage 2: Real-Time Dispatch Hamiltonian (H_dispatch)
 def build_dispatch_hamiltonian(scenario, active_clusters, prev_dispatch=None):
     indices, coeffs = [], []
     var_idx    = 1
@@ -200,8 +197,6 @@ def build_dispatch_hamiltonian(scenario, active_clusters, prev_dispatch=None):
                 coeffs.append(2 * GAMMA / norm)
     return indices, coeffs, bus_to_var
 
-
-
 def evaluate_poly(x, indices, coeffs):
     energy = 0.0
     for idx_list, c in zip(indices, coeffs):
@@ -211,12 +206,11 @@ def evaluate_poly(x, indices, coeffs):
         energy += term
     return energy
 
-
+# Dirac-3 hardware emulator mapping interface
 def solve(indices, coeffs, num_vars):
     if num_vars > 0:
         eqc_model = PolynomialModel()
         for idx_list, c in zip(indices, coeffs):
-            # Map indices to 0-based format for the EQC model requirement
             eqc_vars = [v - 1 for v in idx_list]
             eqc_model.add_term(c, eqc_vars)
 
@@ -228,7 +222,6 @@ def solve(indices, coeffs, num_vars):
                          minimizer_kwargs={"method": "L-BFGS-B"})
     sol = np.round(np.clip(res.x, 0, 1)).astype(int)
     return sol, evaluate_poly(sol.astype(float), indices, coeffs)
-
 
 print("\n" + "="*55)
 print("STAGE 1: Capital investment planning (H_design)")
@@ -250,7 +243,6 @@ print(f"Assets installed : {n_assets}")
 print(f"Switches deployed: {n_switches}")
 print(f"Capital cost (normalised): {capital_cost:.1f}")
 
-
 print("\n" + "="*55)
 print("STAGE 2: Scenario evaluation (H_island + H_dispatch)")
 print("="*55)
@@ -258,6 +250,7 @@ print("="*55)
 results       = []
 prev_dispatch = None
 
+# Recourse optimization loop across uncertainty scenarios
 for scenario in scenarios:
     s = scenario["id"]
     print(f"\n[Scenario {s+1:02d}]  r={scenario['r_factor']:.2f}  "
@@ -316,6 +309,7 @@ print("="*55)
 
 scenario_ids = [r["scenario"]+1 for r in results]
 
+# Output visualization generation
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 fig.patch.set_facecolor("#0D1B2A")
 for ax in axes:
