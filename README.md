@@ -8,17 +8,19 @@ Welcome to the official repositoty for the phase 02 of the QCI challenge submiss
 
 ## 👥 Authors & Team Members
 
-* **Achraf Boussahi**
-  * **Role:** Research Intern @ CQTech (Constantine Quantum Technologies) & AI Student @ ESI-SBA, Algeria
-  * **Connect:** [LinkedIn](https://www.linkedin.com/in/ashraf-boussahi/) | ✉️ [a.boussahi@esi-sba.dz](mailto:a.boussahi@esi-sba.dz)
-
 * **Abir Chekroun**
-  * **Role:** CS Student @ ESI-SBA, Algeria
-  * **Connect:** [LinkedIn](https://www.linkedin.com/in/abir-chekroun-a066b52a8/) | ✉️ [a.chekroun@esi-sba.dz](mailto:a.chekroun@esi-sba.dz)
+  *  CS Student @ ESI-SBA, Algeria
+  *  [LinkedIn](https://www.linkedin.com/in/abir-chekroun-a066b52a8/) | ✉️ [a.chekroun@esi-sba.dz](mailto:a.chekroun@esi-sba.dz)
+
+
+* **Achraf Boussahi**
+  * Research Intern @ CQTech (Constantine Quantum Technologies) & AI Student @ ESI-SBA, Algeria
+  *  [LinkedIn](https://www.linkedin.com/in/ashraf-boussahi/) | ✉️ [a.boussahi@esi-sba.dz](mailto:a.boussahi@esi-sba.dz)
+
 
 * **Zakaria Lourghi**
-  * **Role:** AI Student @ ESI-SBA, Algeria
-  * **Connect:** [LinkedIn](https://www.linkedin.com/in/zakaria-lourghi/) | ✉️ [z.lourghi@esi-sba.dz](mailto:z.lourghi@esi-sba.dz)
+  * AI Student @ ESI-SBA, Algeria
+  *  [LinkedIn](https://www.linkedin.com/in/zakaria-lourghi/) | ✉️ [z.lourghi@esi-sba.dz](mailto:z.lourghi@esi-sba.dz)
 ## 🚀 Overview & Architecture
 
 This framework models a power distribution network (validated on the IEEE 33-bus radial test system) to survive high-impact, low-probability disaster states. The solution splits the mathematical complexity into two coupled optimization layers (Hamiltonians):
