@@ -1,8 +1,8 @@
-# resilient-microgrid-optimization
+# eQoSystem-microgrid-optimization
 # Two-Stage Stochastic Optimization Framework for Resilient Microgrid Design via Entropy Quantum Computing
 
 
-Welcome to the official repositoty for the phase2 of the QCI challenge submission, which demonstrate the two-stage stochastic optimization framework to configure resilient microgrids via entropy quantum computing 
+Welcome to the official repositoty for the phase 02 of the QCI challenge submission, which demonstrate the two-stage stochastic optimization framework to configure resilient microgrids via entropy quantum computing 
 
 Authors & Team Members:
 
@@ -38,5 +38,5 @@ Ensure you have Python 3.8+ installed. Clone this repository and install the dep
 
 ```bash
 git clone [https://github.com/abir-tech/eQoSystem-microgrid-optimization.git](https://github.com/abir-tech/eQoSystem-microgrid-optimization.git)
-cd YOUR_REPO_NAME
+cd eQoSystem-microgrid-optimization
 pip install -r requirements.txt
