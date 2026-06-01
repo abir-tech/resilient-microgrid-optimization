@@ -1,0 +1,24 @@
+# --- Python Junk ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+ENV/
+
+# --- LaTeX Junk ---
+*.aux
+*.log
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.out
+*.blg
+*.bbl
+
+# --- System Junk ---
+.DS_Store
+Thumbs.db
