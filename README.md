@@ -4,9 +4,10 @@
 
 Welcome to the official repositoty for the phase 02 of the QCI challenge submission, which demonstrate the two-stage stochastic optimization framework to configure resilient microgrids via entropy quantum computing 
 
+**Technical Report:** Read our full mathematical formulation and detailed hardware implementation in the accompanying [Download Project PDF](./report.pdf).
 ---
 
-## 👥 Authors & Team Members
+##  Authors & Team Members
 
 
 
@@ -22,7 +23,7 @@ Welcome to the official repositoty for the phase 02 of the QCI challenge submiss
 * **Zakaria Lourghi**
   * AI Student @ ESI-SBA, Algeria
   *  [LinkedIn](https://www.linkedin.com/in/zakaria-lourghi/) | ✉️ [z.lourghi@esi-sba.dz](mailto:z.lourghi@esi-sba.dz)
-## 🚀 Overview & Architecture
+##  Overview & Architecture
 
 
 This framework serves as a configuration and optimization tool for power microgrid energy distribution, implemented using the IEEE 33-bus system. Tested on multiple critical, high-impact disaster states, our approach splits the mathematical complexity into two coupled Hamiltonians, describing exactly two stages:
