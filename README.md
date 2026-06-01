@@ -8,14 +8,15 @@ Welcome to the official repositoty for the phase 02 of the QCI challenge submiss
 
 ## 👥 Authors & Team Members
 
-* **Abir Chekroun**
-  *  CS Student @ ESI-SBA, Algeria
-  *  [LinkedIn](https://www.linkedin.com/in/abir-chekroun-a066b52a8/) | ✉️ [a.chekroun@esi-sba.dz](mailto:a.chekroun@esi-sba.dz)
 
 
 * **Achraf Boussahi**
   * Research Intern @ CQTech (Constantine Quantum Technologies) & AI Student @ ESI-SBA, Algeria
   *  [LinkedIn](https://www.linkedin.com/in/ashraf-boussahi/) | ✉️ [a.boussahi@esi-sba.dz](mailto:a.boussahi@esi-sba.dz)
+
+* **Abir Chekroun**
+  *  CS Student @ ESI-SBA, Algeria
+  *  [LinkedIn](https://www.linkedin.com/in/abir-chekroun-a066b52a8/) | ✉️ [a.chekroun@esi-sba.dz](mailto:a.chekroun@esi-sba.dz)
 
 
 * **Zakaria Lourghi**
